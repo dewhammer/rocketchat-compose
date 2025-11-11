@@ -15,7 +15,7 @@ In Railway dashboard:
 In Railway → `email-proxy` service → Variables:
 
 ```
-RESEND_API_KEY=re_iem8ivqw_GRGKVwbuNnnXgdo3QcWDcKWb
+RESEND_API_KEY=YOUR_RESEND_API_KEY_HERE
 MAIL_FROM_ADDRESS=info@aurasky.cloud
 PORT=587
 ```

@@ -1,0 +1,13 @@
+# Prometheus Dockerfile for Railway
+FROM prom/prometheus:v3.4.2
+
+# Copy Prometheus configuration for Railway
+COPY files/prometheus/prometheus.railway.yml /etc/prometheus/prometheus.yml
+
+# Expose Prometheus port
+EXPOSE 9090
+
+# Prometheus will scrape Rocket.Chat metrics
+# Railway services can discover each other via service names
+# Set ROCKETCHAT_SERVICE_HOST environment variable to the Railway service name
+

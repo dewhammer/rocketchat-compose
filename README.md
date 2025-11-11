@@ -1,6 +1,21 @@
 
 # Rocket.Chat Compose Files
 
+## Railway Deployment
+
+This repository has been configured for deployment on Railway with managed MongoDB and monitoring.
+
+**Quick Start for Railway:**
+1. See [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md) for complete Railway deployment guide
+2. Use Railway CLI: `railway init` to create project
+3. Add MongoDB service: `railway add mongodb`
+4. Deploy services: `railway up`
+5. Configure DNS: See DNS configuration section below
+
+---
+
+## Docker Compose Deployment
+
 ## TLDR;
 
 1. Clone: `git clone --depth 1 https://github.com/RocketChat/rocketchat-compose.git`

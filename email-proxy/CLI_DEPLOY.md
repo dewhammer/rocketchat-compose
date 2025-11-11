@@ -20,7 +20,7 @@ railway add --service email-proxy
 ### 3. Set Environment Variables
 
 ```bash
-railway variables --service email-proxy --set "RESEND_API_KEY=re_iem8ivqw_GRGKVwbuNnnXgdo3QcWDcKWb"
+railway variables --service email-proxy --set "RESEND_API_KEY=YOUR_RESEND_API_KEY_HERE"
 railway variables --service email-proxy --set "MAIL_FROM_ADDRESS=info@aurasky.cloud"
 railway variables --service email-proxy --set "PORT=587"
 ```
@@ -49,7 +49,7 @@ If CLI prompts are problematic, use Railway dashboard:
    - **Root Directory**: `email-proxy/`
    - **Dockerfile Path**: `Dockerfile` (auto-detected)
 5. Variables tab → Add:
-   - `RESEND_API_KEY=re_iem8ivqw_GRGKVwbuNnnXgdo3QcWDcKWb`
+   - `RESEND_API_KEY=YOUR_RESEND_API_KEY_HERE`
    - `MAIL_FROM_ADDRESS=info@aurasky.cloud`
    - `PORT=587`
 6. Deploy → Service will auto-deploy

@@ -1,0 +1,17 @@
+# Grafana Dockerfile for Railway
+FROM grafana/grafana:12.0.2
+
+# Copy Grafana provisioning files
+COPY files/grafana/provisioning /etc/grafana/provisioning
+COPY files/grafana/dashboards /dashboards
+
+# Copy Railway-specific Prometheus datasource config
+COPY files/grafana/provisioning/datasources/prometheus.railway.yml /etc/grafana/provisioning/datasources/prometheus.yml
+
+# Expose Grafana port
+EXPOSE 3000
+
+# Grafana will connect to Prometheus via Railway service discovery
+# In Railway, use service name 'prometheus' as hostname
+# Admin password and other config via environment variables
+

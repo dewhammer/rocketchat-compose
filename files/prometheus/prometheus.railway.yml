@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 60s
+  evaluation_interval: 60s
+
+scrape_configs:
+  # Scrape Rocket.Chat metrics
+  # In Railway, services can discover each other using the service name as hostname
+  # Replace 'rocketchat' with your actual Railway service name
+  - job_name: 'rocketchat'
+    static_configs:
+      - targets: ['rocketchat:9458']
+        labels:
+          job: rocketchat
+          service: rocketchat
+
+  # Scrape Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
