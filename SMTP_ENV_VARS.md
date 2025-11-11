@@ -31,7 +31,7 @@ SMTP_IgnoreTLS=false
 
 Or use MAIL_URL format:
 ```
-MAIL_URL=smtps://info@aurasky.cloud:[password]@smtp.hostinger.com:465/
+MAIL_URL=smtps://info@aurasky.cloud:YOUR_MAILBOX_PASSWORD@smtp.hostinger.com:465/
 ```
 
 ## Which Method to Use?
