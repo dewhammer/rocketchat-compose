@@ -1,0 +1,63 @@
+services:
+  rocketchat:
+    image: ${IMAGE:-registry.rocket.chat/rocketchat/rocket.chat}:${RELEASE:-latest}
+    restart: always
+    labels:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: ${METRICS_PORT:-9458}
+    environment:
+      ROOT_URL: ${ROOT_URL:-http://localhost}
+      PORT: ${PORT:-3000}
+      DEPLOY_METHOD: docker
+      DEPLOY_PLATFORM: railway
+      REG_TOKEN: ${REG_TOKEN:-}
+      LICENSE_DEBUG: true
+      OVERWRITE_SETTING_Prometheus_Enabled: true
+      OVERWRITE_SETTING_Prometheus_Port: "${METRICS_PORT:-9458}"
+      # Use Railway's managed MongoDB connection string
+      MONGO_URL: ${MONGO_URL}
+      # Use monolith mode (no NATS needed for single instance)
+      TRANSPORTER: "monolith"
+      INSTANCE_IP: "${INSTANCE_IP:-}"
+    expose:
+      - ${PORT:-3000}
+      - ${METRICS_PORT:-9458}
+  prometheus:
+    image: docker.io/prom/prometheus:${PROMETHEUS_VERSION:-v3.4.2}
+    restart: always
+    user: root
+    command:
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-lifecycle
+      - --web.listen-address=:9090
+      - --storage.tsdb.path=/prometheus/data
+      - --config.auto-reload-interval=30s
+      - --auto-gomaxprocs
+      - --storage.tsdb.retention.size=${PROMETHEUS_RETENTION_SIZE:-15GB}
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION_TIME:-15d}
+    expose:
+      - 9090
+    volumes:
+      - prometheus_tsdb:/prometheus:rw
+      - ./files/prometheus:/etc/prometheus:Z
+  grafana:
+    image: docker.io/grafana/grafana:${GRAFANA_VERSION:-12.0.2}
+    restart: always
+    expose:
+      - 3000
+    volumes:
+      - grafana_data:/var/lib/grafana:Z
+      - ./files/grafana/dashboards:/dashboards:Z
+      - ./files/grafana/provisioning/:/etc/grafana/provisioning:Z
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-rc-admin}
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_AUTH_ANONYMOUS_ORG_NAME=Main Org.
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_SERVER_ROOT_URL=${GRAFANA_ROOT_URL:-http://localhost/grafana}
+volumes:
+  prometheus_tsdb: {driver: local}
+  grafana_data: {driver: local}
+
