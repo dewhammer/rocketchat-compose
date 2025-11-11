@@ -1,0 +1,16 @@
+# Rocket.Chat Dockerfile for Railway
+FROM registry.rocket.chat/rocketchat/rocket.chat:latest
+
+# Expose Rocket.Chat port
+EXPOSE 3000
+
+# Expose metrics port  
+EXPOSE 9458
+
+# Rocket.Chat will use environment variables set by Railway
+# Key variables needed:
+# - ROOT_URL (set to https://chat.aurasky.cloud)
+# - MONGO_URL (from Railway MongoDB service - auto-linked)
+# - PORT (3000)
+# - TRANSPORTER (monolith for single instance)
+
